@@ -15,7 +15,6 @@
  * For the purposes of not making the file more difficult to understand,
  * file-scope variables should have the prefix eie_.
  */
-char *eie_dir, *eie_store_dir, *eie_info_dir, *eie_addfiles_addr;
 
 int main(int argc, char **argv)
 {
@@ -75,6 +74,7 @@ int main(int argc, char **argv)
 	free(eie_addfiles_addr);
 	free(eie_info_dir);
 	free(eie_store_dir);
+	return 0;
 }
 
 /*
@@ -225,6 +225,7 @@ int add_file_to_queue(char *file)
 	}
 	fprintf(fp, "%s\n", file);
 	fclose(fp);
+	return 0;
 }
 
 void print_usage()
