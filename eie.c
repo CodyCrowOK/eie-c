@@ -20,7 +20,7 @@ char *eie_dir, *eie_store_dir, *eie_info_dir, *eie_addfiles_addr;
 int main(int argc, char **argv)
 {
 	if (argc < 2) {
-		printf("USAGE: eie <command> [arguments]\n");
+		print_usage();
 		return 0;
 	}
 
@@ -48,6 +48,9 @@ int main(int argc, char **argv)
 	if (strcmp(argv[1], "init") == 0) command = 0;
 	if (strcmp(argv[1], "clear") == 0) command = 1;
 	if (strcmp(argv[1], "killall") == 0) command = 2;
+	//I don't like the command name killall, let's make an alias `destroy`.
+	if (strcmp(argv[1], "destroy") == 0) command = 2;
+	if (strcmp(argv[1], "add") == 0) command = 3;
 
 	switch (command) {
 	case 0: 
@@ -61,6 +64,10 @@ int main(int argc, char **argv)
 	case 2:
 		err = killall();
 		if (err) printf("killall failed\n");
+		break;
+	case 3:
+		err = add(argc, argv);
+		if (err) printf("add failed.\n");
 		break;
 	}
 
@@ -116,12 +123,11 @@ int clear()
 {
 	FILE *file = fopen(eie_addfiles_addr, "w");
 	if (!file) {
-		printf("Could not create blank file.\n");
-		fclose(file);
-		
+		printf("Could not create blank file.\n");		
 		return 1;
 	} else {
 		printf("Cleared.\n");
+		fclose(file);
 	}
 	return 0;
 }
@@ -131,7 +137,14 @@ int clear()
  */
 int killall()
 {
+	/*
+	 * Walk the file tree and delete files, leaving directories
+	 */
 	int status = nftw(eie_dir, delete_file, 2, FTW_CHDIR | FTW_MOUNT | FTW_DEPTH | FTW_ACTIONRETVAL);
+
+	/*
+	 * Remove directories
+	 */
 	if (status == -1) {
 		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
 		return 1;
@@ -163,6 +176,8 @@ int killall()
  */
 int delete_file(const char *fpath, const struct stat *sb, int tflag, struct FTW *ftwbuf)
 {
+	sb = sb;
+	ftwbuf = ftwbuf;
 	//If fpath is a directory, then this is a liar:
 	printf("Removing %s\n", fpath);
 
@@ -177,4 +192,43 @@ int delete_file(const char *fpath, const struct stat *sb, int tflag, struct FTW 
 	}
 
 	return FTW_CONTINUE;
+}
+
+int add(int argc, char **argv)
+{
+	int i;
+	int num_files = argc - 2;
+	if (num_files == 0) {
+		printf("We need something here.\n");
+		print_usage();
+		return 1;
+	}
+
+	for (i = 2; i < argc; i++) {
+		int error = add_file_to_queue(argv[i]);
+		if (error) {
+			printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
+int add_file_to_queue(char *file)
+{
+	printf("Added %s\n", file);
+	FILE *fp = fopen(eie_addfiles_addr, "a");
+	if (!fp) {
+		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+		return 1;
+	}
+	fprintf(fp, "%s\n", file);
+	fclose(fp);
+}
+
+void print_usage()
+{
+	printf("USAGE: eie <command> [arguments]\n");
+	return;
 }
