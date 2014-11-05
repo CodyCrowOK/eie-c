@@ -3,10 +3,11 @@
 #CFLAGS=-I.
 DEPS = eie.h
 
-CFILES := eie.c
+CFILES := eie.c add.c destroy.c init.c clear.c
 PROG := eie
 CFLAGS := -Wall -Wextra -g
 LDFLAGS :=
+DMACRO := 
 
 # -MMD generates dependencies while compiling
 CFLAGS += -MMD
