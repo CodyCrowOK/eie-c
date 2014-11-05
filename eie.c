@@ -9,7 +9,7 @@
 
 #include "eie.h"
 
-char *eie_dir;
+char *eie_dir, *eie_store_dir, *eie_info_dir, *eie_addfiles_addr;
 
 int main(int argc, char **argv)
 {
@@ -46,9 +46,15 @@ int init()
 	char *cwd = get_current_dir_name();
 	eie_dir = malloc(strlen(cwd) + strlen(DIR_NAME) + 3);
 	sprintf(eie_dir, "%s/%s", cwd, DIR_NAME);
-	char eie_store_dir[strlen(eie_dir) + 7];
-	char eie_info_dir[strlen(eie_dir) + 6];
-	char eie_addfiles_addr[strlen(eie_dir) + 10];
+	
+	eie_store_dir = malloc(strlen(eie_dir) + 7);
+	sprintf(eie_store_dir, "%s/store", eie_dir);
+	
+	eie_info_dir = malloc(strlen(eie_dir) + 6);
+	sprintf(eie_info_dir, "%s/info", eie_dir);
+	
+	eie_addfiles_addr = malloc(strlen(eie_dir) + 10);
+	sprintf(eie_addfiles_addr, "%s/addfiles", eie_dir);
 	
 	free(cwd);
 
@@ -81,7 +87,11 @@ int init()
 	return 0;
 }
 
+/*
+ * Just removes the contents of addfiles
+ */
 int clear()
 {
+	
 	return 0;
 }
