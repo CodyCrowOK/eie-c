@@ -8,10 +8,9 @@ char *eie_dir, *eie_store_dir, *eie_info_dir, *eie_addfiles_addr;
 void print_usage();
 int init();
 int clear();
-
 int killall();
-
 int add(int argc, char **argv);
 int add_file_to_queue(char *file);
+int commit();
 
 #endif

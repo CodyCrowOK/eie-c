@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 	//I don't like the command name killall, let's make an alias `destroy`.
 	if (strcmp(argv[1], "destroy") == 0) command = 2;
 	if (strcmp(argv[1], "add") == 0) command = 3;
+	if (strcmp(argv[1], "commit") == 0) command = 4;
 
 	switch (command) {
 	case 0: 
@@ -58,6 +59,13 @@ int main(int argc, char **argv)
 	case 3:
 		err = add(argc, argv);
 		if (err) printf("add failed.\n");
+		break;
+	case 4:
+		err = commit();
+		if (err) printf("commit failed.\n");
+		break;
+	default:
+		print_usage();
 		break;
 	}
 

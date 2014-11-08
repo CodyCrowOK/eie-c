@@ -3,7 +3,7 @@
 #CFLAGS=-I.
 DEPS = eie.h
 
-CFILES := eie.c add.c destroy.c init.c clear.c
+CFILES := eie.c add.c destroy.c init.c clear.c commit.c
 PROG := eie
 CFLAGS := -Wall -Wextra -g
 LDFLAGS :=
