@@ -6,7 +6,8 @@ DEPS = eie.h
 CFILES := eie.c add.c destroy.c init.c clear.c commit.c
 PROG := eie
 CFLAGS := -Wall -Wextra -g
-LDFLAGS :=
+#For SHA1:
+LDFLAGS := -lcrypto
 DMACRO := 
 
 # -MMD generates dependencies while compiling
@@ -17,7 +18,7 @@ OBJFILES := $(CFILES:.c=.o)
 DEPFILES := $(CFILES:.c=.d)
 
 $(PROG) : $(OBJFILES)
-	$(LINK.o) $(LDFLAGS) -o $@ $^
+	$(LINK.o) -o $@ $^ $(LDFLAGS)
 
 clean :
 	rm -f $(PROG) $(OBJFILES) $(DEPFILES)
