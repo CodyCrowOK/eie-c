@@ -88,9 +88,9 @@ int commit_file(char *filename)
 	SHA1_Final(hash, &ctx);
 
 	//Now we convert the hash into hex representation
-	char hash_hex[20];
+	char hash_hex[21];
 	//If it's stupid and it works, it isn't stupid and still works. *sigh*
-	snprintf(hash_hex, 20, "%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x", hash[0], hash[1], hash[2], hash[3], hash[4], hash[5], hash[6], hash[7], hash[8], hash[9], hash[10], hash[11], hash[12], hash[13], hash[14], hash[15], hash[16], hash[17], hash[18], hash[19]);
+	snprintf(hash_hex, 21, "%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x", hash[0], hash[1], hash[2], hash[3], hash[4], hash[5], hash[6], hash[7], hash[8], hash[9], hash[10], hash[11], hash[12], hash[13], hash[14], hash[15], hash[16], hash[17], hash[18], hash[19]);
 
 	//Do the rest
 	char destination[strlen(eie_store_dir) + (10 * sizeof(char)) + strlen(hash_hex) + 3];
