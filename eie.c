@@ -42,6 +42,7 @@ int main(int argc, char **argv)
 	if (strcmp(argv[1], "destroy") == 0) command = 2;
 	if (strcmp(argv[1], "add") == 0) command = 3;
 	if (strcmp(argv[1], "commit") == 0) command = 4;
+	if (strcmp(argv[1], "list") == 0) command = 5;
 
 	switch (command) {
 	case 0: 
@@ -63,6 +64,10 @@ int main(int argc, char **argv)
 	case 4:
 		err = commit();
 		if (err) printf("commit failed.\n");
+		break;
+	case 5:
+		err = list(argc, argv);
+		if (err) printf("list failed.\n");
 		break;
 	default:
 		print_usage();

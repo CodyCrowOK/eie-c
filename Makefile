@@ -3,7 +3,7 @@
 #CFLAGS=-I.
 DEPS = eie.h
 
-CFILES := eie.c add.c destroy.c init.c clear.c commit.c
+CFILES := eie.c add.c destroy.c init.c clear.c commit.c list.c
 PROG := eie
 CFLAGS := -Wall -Wextra -g
 #For SHA1:
@@ -22,5 +22,7 @@ $(PROG) : $(OBJFILES)
 
 clean :
 	rm -f $(PROG) $(OBJFILES) $(DEPFILES)
+
+	
 
 -include $(DEPFILES)

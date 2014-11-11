@@ -12,5 +12,6 @@ int killall();
 int add(int argc, char **argv);
 int add_file_to_queue(char *file);
 int commit();
+int list(int argc, char **argv);
 
 #endif

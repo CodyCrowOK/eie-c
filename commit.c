@@ -96,7 +96,7 @@ int commit_file(char *filename)
 	char destination[strlen(eie_store_dir) + (10 * sizeof(char)) + strlen(hash_hex) + 3];
 	int commit_time = (int) time(NULL);
 	sprintf(destination, "%s/%d_%s", eie_store_dir, commit_time, hash_hex);
-	printf("Committing to %s\n", destination);
+	printf("Commit to %s\n", destination);
 
 	//Write the file to the storage directory
 	FILE *committed_file = fopen(destination, "w");

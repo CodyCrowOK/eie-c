@@ -24,25 +24,25 @@ int killall()
 	 * Remove directories
 	 */
 	if (status == -1) {
-		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+		printf("ERROR (nftw) on line %d: %s\n", __LINE__, strerror(errno));
 		return 1;
 	}
 
 	status = rmdir(eie_info_dir);
 	if (status == -1) {
-		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+		printf("ERROR (rmdir) on line %d: %s\n", __LINE__, strerror(errno));
 		return 1;
 	}
 
 	status = rmdir(eie_store_dir);
 	if (status == -1) {
-		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+		printf("ERROR (rmdir) on line %d: %s\n", __LINE__, strerror(errno));
 		return 1;
 	}
 	
 	status = rmdir(eie_dir);
 	if (status == -1) {
-		printf("ERROR (mkdir) on line %d: %s\n", __LINE__, strerror(errno));
+		printf("ERROR (rmdir) on line %d: %s\n", __LINE__, strerror(errno));
 		return 1;
 	}
 	
