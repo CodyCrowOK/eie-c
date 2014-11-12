@@ -43,6 +43,7 @@ int main(int argc, char **argv)
 	if (strcmp(argv[1], "add") == 0) command = 3;
 	if (strcmp(argv[1], "commit") == 0) command = 4;
 	if (strcmp(argv[1], "list") == 0) command = 5;
+	if (strcmp(argv[1], "revert") == 0) command = 6;
 
 	switch (command) {
 	case 0: 
@@ -68,6 +69,10 @@ int main(int argc, char **argv)
 	case 5:
 		err = list(argc, argv);
 		if (err) printf("list failed.\n");
+		break;
+	case 6:
+		err = revert(argc, argv);
+		if (err) printf("revert failed.\n");
 		break;
 	default:
 		print_usage();
