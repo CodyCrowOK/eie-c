@@ -17,7 +17,8 @@ int revert(int argc, char **argv)
 	char *oldfile = argv[2];
 	char *commit = argv[3];
 
-	char *commitfile = (char *) malloc(strlen(eie_info_dir) + strlen(commit) + 1);
+	char *commitfile = (char *) malloc(strlen(eie_info_dir) + strlen(commit) + 2);
+	sprintf(commitfile, "%s/%s", eie_info_dir, commit);
 	FILE *infofile = fopen(commitfile, "r");
 	if (!infofile) {
 		printf("ERROR (fopen) on line %d: %s\n", __LINE__, strerror(errno));
@@ -39,13 +40,16 @@ int revert(int argc, char **argv)
 			break;
 		}
 	}
+	free(commitfile);
 	free(line);
 	fclose(infofile);
 
-	if (is_in_commit) copy_file(oldfile, old_commit_filename);
-	else printf("File not found in commit.\n");
+	if (is_in_commit) {
+		printf("Reverting commit %s for file %s\n", commit, oldfile);
+		copy_file(oldfile, old_commit_filename);
+	} else printf("File not found in commit.\n");
 
-		
+	
 	
 	return 0;
 }
@@ -79,5 +83,8 @@ static void copy_file(char *destination, char *source)
 		if (!res) break;
 		fprintf(dfp, "%s", buffer);
 	}
+
+	fclose(sfp);
+	fclose(dfp);
 	
 }

@@ -58,6 +58,9 @@ int get_files_and_commit()
 	while ((read = getline(&line, &len, file) != -1)) {
 		commit_file(strtok(line, "\n"));
 	}
+
+	fclose(file);
+	free(line);
 	
 	return 0;
 }
@@ -86,6 +89,7 @@ int commit_file(char *filename)
 	}
 	unsigned char hash[SHA_DIGEST_LENGTH];
 	SHA1_Final(hash, &ctx);
+	fclose(file);
 
 	//Now we convert the hash into hex representation
 	char hash_hex[21];
