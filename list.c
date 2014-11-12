@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <glob.h>
 #include <string.h>
 #include <libgen.h>
@@ -52,8 +53,10 @@ int list(int argc, char **argv)
 				flags[i] = 1;
 			}
 		}
+		fclose(file);
 		
 	}
+	free(line);
 
 	int is_in_a_commit = 0;
 	printf("Commits containing %s:\n", argv[2]);
@@ -65,7 +68,7 @@ int list(int argc, char **argv)
 	}
 	if (!is_in_a_commit) printf("No commits found containing the file: %s\n", argv[2]);
 	
-
+	globfree(&pglob);
 	
 		
 	return 0;
