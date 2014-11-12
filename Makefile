@@ -20,9 +20,11 @@ DEPFILES := $(CFILES:.c=.d)
 $(PROG) : $(OBJFILES)
 	$(LINK.o) -o $@ $^ $(LDFLAGS)
 
-clean :
+clean:
 	rm -f $(PROG) $(OBJFILES) $(DEPFILES)
 
+install:
+	install -m 755 $(PROG) /usr/bin
 	
 
 -include $(DEPFILES)
